@@ -1,0 +1,53 @@
+{
+  "afzender": {
+    "naam": "Jouw Naam",
+    "wie": "oprichter van Jouw Bedrijf, helpt organisaties met AI",
+    "bewijs": "Noem hier klanten of resultaten die Claude mag gebruiken.",
+    "schrijfregels": "Schrijf in correct Nederlands, beleefd en menselijk. Geen marketingtaal, geen emoji, geen gedachtestreepjes. Kort en concreet, met één duidelijke vraag aan het eind."
+  },
+  "bericht": {
+    "type": "connectieverzoek",
+    "maxTekens": 300,
+    "aanhef": "Goedendag {voornaam},",
+    "opening": "Hopelijk is alles goed?",
+    "afsluiting": "Met vriendelijke groet,\n{mijnnaam}"
+  },
+  "dagLimiet": 25,
+  "maxPerKeer": 25,
+  "sporen": {
+    "advies": "Advies",
+    "groei": "Groei"
+  },
+  "groepen": {
+    "overheid": {
+      "label": "Gemeenten en overheid",
+      "spoor": "advies",
+      "wie": "werkt bij een gemeente, provincie, waterschap of andere overheidsorganisatie",
+      "aanbod": "hulp bij verantwoorde inzet van AI en de AI Act",
+      "sjabloon": "Goedendag {voornaam},\n\nHopelijk is alles goed? Ik help overheidsorganisaties om AI verantwoord en praktisch in te zetten. Ik ben benieuwd hoe jullie hiermee bezig zijn. Zou je openstaan voor een kort gesprek?\n\nMet vriendelijke groet,\nJouw Naam"
+    },
+    "bedrijf": {
+      "label": "MKB en B2B",
+      "spoor": "advies",
+      "wie": "beslisser bij een bedrijf, zoals directie, HR, operations of IT",
+      "aanbod": "AI-trainingen en begeleiding naar echt gebruik",
+      "sjabloon": "Goedendag {voornaam},\n\nHopelijk is alles goed? Ik help teams om AI echt te gebruiken in hun dagelijkse werk. Ik ben benieuwd waar jullie nu tegenaan lopen. Zou je openstaan voor een kort gesprek?\n\nMet vriendelijke groet,\nJouw Naam"
+    },
+    "marketing": {
+      "label": "Marketing- en salesleiders",
+      "spoor": "groei",
+      "wie": "verantwoordelijk voor marketing, sales of groei",
+      "aanbod": "AI-gedreven marketing en meer pipeline",
+      "sjabloon": "Goedendag {voornaam},\n\nHopelijk is alles goed? Ik help B2B-teams aan meer pipeline met AI in marketing en sales. Ik ben benieuwd tegen welke uitdagingen jullie nu aanlopen. Zou je openstaan voor een kort gesprek?\n\nMet vriendelijke groet,\nJouw Naam"
+    }
+  },
+  "standaardGroep": "bedrijf",
+  "apollo": {
+    "functies": ["CMO", "Head of Marketing", "HR Director", "CIO"],
+    "senioriteit": ["c_suite", "vp", "head", "director"],
+    "locaties": ["Netherlands"],
+    "hoofdkantoor": [],
+    "bedrijfsgrootte": ["51,200", "201,500"],
+    "trefwoorden": ""
+  }
+}

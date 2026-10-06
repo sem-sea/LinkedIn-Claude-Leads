@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>LinkedIn Outreach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#f2f4f6; --surface:#ffffff; --ink:#152238; --muted:#5b687a; --line:#dce2e9;
+  --accent:#0d7f73; --accent-soft:#dcefec; --navy:#1b3a66;
+  --sent:#2a64a8; --sent-soft:#e2ecf8; --reply:#0d7f73; --reply-soft:#dcefec;
+  --meet:#2c7a4b; --meet-soft:#e0f1e7; --skip:#8390a1; --skip-soft:#eaedf1;
+  --prio:#9a5b10; --prio-soft:#f8ecd9; --red:#b3261e;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Instrument Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1622; --surface:#172131; --ink:#e7edf5; --muted:#9aa8ba; --line:#2a3647;
+    --accent:#3cc2b1; --accent-soft:#16352f; --navy:#9dbbe8;
+    --sent:#86b4ec; --sent-soft:#1c2c44; --reply:#3cc2b1; --reply-soft:#16352f;
+    --meet:#6fcf97; --meet-soft:#17331f; --skip:#8391a4; --skip-soft:#222c39;
+    --prio:#f0b35c; --prio-soft:#3a2a14; --red:#ff8a80; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1622; --surface:#172131; --ink:#e7edf5; --muted:#9aa8ba; --line:#2a3647;
+  --accent:#3cc2b1; --accent-soft:#16352f; --navy:#9dbbe8;
+  --sent:#86b4ec; --sent-soft:#1c2c44; --reply:#3cc2b1; --reply-soft:#16352f;
+  --meet:#6fcf97; --meet-soft:#17331f; --skip:#8391a4; --skip-soft:#222c39;
+  --prio:#f0b35c; --prio-soft:#3a2a14; --red:#ff8a80; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:960px;margin:0 auto;padding-inline:16px;padding-block:24px 48px;display:grid;gap:20px}
+header{display:grid;gap:6px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{font-family:var(--f-display);font-size:clamp(26px,5vw,36px);line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{color:var(--muted);margin:0;max-width:62ch}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:2px}
+.stat b{font-family:var(--f-mono);font-size:22px;font-variant-numeric:tabular-nums;font-weight:500}
+.stat span{font-size:13px;color:var(--muted)}
+.stat.today b{color:var(--accent)}
+.meter{height:6px;border-radius:6px;background:var(--line);overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:grid;gap:10px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--bg)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filters select,.filters input[type=search]{font:inherit;font-size:14px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;min-width:0}
+.filters input[type=search]{flex:1 1 180px}
+.filters select{flex:0 1 auto}
+.check{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.count{font-size:13px;color:var(--muted)}
+.topline{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
+.list{display:grid;gap:8px}
+.row{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:start}
+.row[data-status="skip"]{opacity:.6}
+.who{min-width:0;display:grid;gap:2px}
+.name{font-weight:600;font-size:15.5px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.title{color:var(--muted);font-size:13.5px;overflow-wrap:anywhere}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;color:var(--muted)}
+.pill{font-size:12px;font-weight:600;border-radius:999px;padding:1px 8px;background:var(--accent-soft);color:var(--accent)}
+.pill.lane-1{background:var(--sent-soft);color:var(--sent)}
+.pill.lane-2{background:var(--prio-soft);color:var(--prio)}
+.pill.out,.pill.nolink{background:var(--skip-soft);color:var(--skip)}
+.prio{font-family:var(--f-mono);font-size:11px;font-weight:500;border-radius:4px;padding:1px 6px;background:var(--prio-soft);color:var(--prio)}
+.side{display:grid;gap:6px;justify-items:end}
+.status{font:inherit;font-size:13px;font-weight:600;border-radius:999px;border:1px solid var(--line);padding:4px 10px;background:var(--surface);color:var(--ink);cursor:pointer}
+.status[data-v="sent"]{background:var(--sent-soft);color:var(--sent);border-color:transparent}
+.status[data-v="replied"]{background:var(--reply-soft);color:var(--reply);border-color:transparent}
+.status[data-v="meeting"]{background:var(--meet-soft);color:var(--meet);border-color:transparent}
+.status[data-v="skip"]{background:var(--skip-soft);color:var(--skip);border-color:transparent}
+.actions{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{font:inherit;font-size:13px;font-weight:600;border-radius:8px;padding:6px 12px;border:1px solid var(--accent);background:var(--accent);color:var(--surface);cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--accent)}
+details{grid-column:1/-1}
+summary{cursor:pointer;font-size:13px;color:var(--muted);width:max-content}
+.msg{margin:8px 0 0;padding:10px 12px;border-left:3px solid var(--accent);background:var(--bg);border-radius:0 8px 8px 0;white-space:pre-wrap;font-size:14px;max-width:70ch}
+.chars{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.chars.over{color:var(--red);font-weight:500}
+.done{font-size:12.5px;color:var(--muted);font-family:var(--f-mono)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:24px;color:var(--muted)}
+.empty b{color:var(--ink);display:block;margin-bottom:4px}
+section.tpl{display:grid;gap:10px}
+h2{font-family:var(--f-display);font-size:20px;margin:0}
+.tplgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.tplcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:6px;align-content:start}
+.tplcard h3{margin:0;font-size:14px}
+.tplcard p{margin:0;font-size:13.5px;color:var(--muted);white-space:pre-wrap}
+.note{font-size:13px;color:var(--muted);margin:0}
+.toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:14px;z-index:20}
+@media (max-width:560px){
+  .row{grid-template-columns:minmax(0,1fr)}
+  .side{justify-items:start;grid-auto-flow:column;justify-content:start;align-items:center}
+}
+@media (prefers-reduced-motion:reduce){.meter i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="eyebrow">Apollo-leads · LinkedIn</div>
+    <h1>LinkedIn Outreach</h1>
+    <p class="lede" id="lede">Kopieer het bericht, stuur het via LinkedIn en zet de status.</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><b id="s-total">0</b><span>Leads</span></div>
+    <div class="stat"><b id="s-todo">0</b><span>Te doen</span></div>
+    <div class="stat"><b id="s-sent">0</b><span>Verstuurd</span></div>
+    <div class="stat"><b id="s-replied">0</b><span>Gereageerd of gesprek</span></div>
+    <div class="stat today"><b id="s-today">0 / 25</b><span>Vandaag verstuurd</span><div class="meter"><i id="m-today"></i></div></div>
+  </div>
+
+  <div class="bar">
+    <div class="tabs" role="group" aria-label="Spoor" id="tabs"></div>
+    <div class="filters">
+      <input id="q" type="search" placeholder="Zoek op naam, bedrijf of functie" aria-label="Zoeken">
+      <select id="seg" aria-label="Groep"></select>
+      <select id="st" aria-label="Status">
+        <option value="all">Alle statussen</option>
+        <option value="todo">Te doen</option>
+        <option value="sent">Verstuurd</option>
+        <option value="replied">Gereageerd</option>
+        <option value="meeting">Gesprek gepland</option>
+        <option value="skip">Overslaan</option>
+      </select>
+      <label class="check"><input id="prioOnly" type="checkbox"> Alleen prioriteit A</label>
+      <label class="check"><input id="showOut" type="checkbox"> Toon buiten ICP</label>
+    </div>
+  </div>
+
+  <div class="topline">
+    <div class="count" id="count"></div>
+    <button class="btn ghost" type="button" id="export">Exporteer CSV met status</button>
+  </div>
+  <div class="list" id="list"></div>
+
+  <section class="tpl">
+    <h2>Berichten per groep</h2>
+    <p class="note">Elk bericht is per persoon geschreven. Dit zijn de basisteksten per groep. Pas een zin aan als je iemand beter kent.</p>
+    <div class="tplgrid" id="tpls"></div>
+  </section>
+</div>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+const DATA = JSON.parse(document.getElementById("data").textContent);
+const SEG = DATA.groepen;
+const LANE = DATA.sporen;
+const LANE_KEYS = Object.keys(LANE);
+const DAILY = DATA.dagLimiet || 25;
+const LIMIT = DATA.maxTekens || 0;
+const STATUS = [["todo","Te doen"],["sent","Verstuurd"],["replied","Gereageerd"],["meeting","Gesprek gepland"],["skip","Overslaan"]];
+const STORE = "outreach.status.";
+const state = { lane: "all", seg: "all", st: "all", q: "", prio: false, out: false };
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const today = () => new Date().toISOString().slice(0, 10);
+const laneClass = (l) => "lane-" + Math.max(0, LANE_KEYS.indexOf(l)) % 3;
+const inIcp = (c) => c.icp !== false;
+
+function load(id){ try { return JSON.parse(localStorage.getItem(STORE + id)) || {}; } catch (_) { return {}; } }
+function save(id, v){ try { localStorage.setItem(STORE + id, JSON.stringify(v)); return true; } catch (_) { return false; } }
+
+const contacts = DATA.contacts.map((c) => ({ ...c, ...load(c.id) }));
+const msgFor = (c) => (c.msg || (SEG[c.seg] && SEG[c.seg].sjabloon) || "").replaceAll("{voornaam}", c.first || c.name.split(" ")[0]);
+const liFor = (c) => c.linkedin || "https://www.linkedin.com/search/results/people/?keywords=" + encodeURIComponent([c.name, c.company].filter(Boolean).join(" "));
+
+$("eyebrow").textContent = DATA.bron || "Apollo-leads · LinkedIn";
+$("lede").textContent = `${DATA.contacts.length} leads uit Apollo, per groep ingedeeld door Claude. Kopieer het bericht, stuur het via LinkedIn en zet de status. Houd het bij ${DAILY} per dag.`;
+$("tabs").innerHTML = '<button class="tab" type="button" data-lane="all" aria-pressed="true">Alles</button>' +
+  LANE_KEYS.map((k) => `<button class="tab" type="button" data-lane="${esc(k)}" aria-pressed="false">${esc(LANE[k])}</button>`).join("");
+
+function fillSegSelect(){
+  const opts = ['<option value="all">Alle groepen</option>'];
+  for (const [k, v] of Object.entries(SEG)) {
+    if (state.lane !== "all" && v.spoor !== state.lane) continue;
+    opts.push(`<option value="${esc(k)}">${esc(v.label)}</option>`);
+  }
+  $("seg").innerHTML = opts.join("");
+  if (state.seg !== "all" && SEG[state.seg] && (state.lane === "all" || SEG[state.seg].spoor === state.lane)) $("seg").value = state.seg;
+  else { state.seg = "all"; $("seg").value = "all"; }
+}
+
+function renderTemplates(){
+  $("tpls").innerHTML = Object.entries(SEG).filter(([, v]) => v.sjabloon).map(([, v]) =>
+    `<div class="tplcard"><h3>${esc(v.label)} <span class="pill ${laneClass(v.spoor)}">${esc(LANE[v.spoor] || "")}</span></h3><p>${esc(v.sjabloon.replaceAll("{voornaam}", "[voornaam]"))}</p></div>`
+  ).join("") || '<p class="note">Geen basisteksten ingesteld.</p>';
+}
+
+function renderStats(){
+  const icp = contacts.filter(inIcp);
+  const by = (s) => icp.filter((c) => (c.status || "todo") === s).length;
+  $("s-total").textContent = icp.length;
+  $("s-todo").textContent = by("todo");
+  $("s-sent").textContent = by("sent");
+  $("s-replied").textContent = by("replied") + by("meeting");
+  const t = contacts.filter((c) => c.sentAt === today()).length;
+  $("s-today").textContent = `${t} / ${DAILY}`;
+  $("m-today").style.width = Math.min(100, (t / DAILY) * 100) + "%";
+}
+
+function visible(){
+  const q = state.q.trim().toLowerCase();
+  return contacts.filter((c) => {
+    const seg = SEG[c.seg];
+    if (!seg) return false;
+    if (!state.out && !inIcp(c)) return false;
+    if (state.lane !== "all" && seg.spoor !== state.lane) return false;
+    if (state.seg !== "all" && c.seg !== state.seg) return false;
+    if (state.st !== "all" && (c.status || "todo") !== state.st) return false;
+    if (state.prio && c.prio !== "A") return false;
+    if (q && !(`${c.name} ${c.title} ${c.company} ${c.loc}`.toLowerCase().includes(q))) return false;
+    return true;
+  }).sort((a, b) => (a.prio === "A" ? 0 : 1) - (b.prio === "A" ? 0 : 1) || (a.order || 0) - (b.order || 0));
+}
+
+function render(){
+  renderStats();
+  const list = $("list");
+  if (!contacts.length) {
+    list.innerHTML = '<div class="empty"><b>Nog geen leads</b>Draai het script met een Apollo-export of zoekopdracht.</div>';
+    $("count").textContent = "";
+    return;
+  }
+  const rows = visible();
+  $("count").textContent = `${rows.length} van ${contacts.filter(inIcp).length} leads binnen je ICP`;
+  if (!rows.length) {
+    list.innerHTML = '<div class="empty"><b>Geen leads in deze selectie</b>Kies een andere groep of status, of maak de zoekterm korter.</div>';
+    return;
+  }
+  list.innerHTML = rows.map((c) => {
+    const seg = SEG[c.seg];
+    const st = c.status || "todo";
+    const m = msgFor(c);
+    const over = LIMIT && m.length > LIMIT;
+    const role = [c.title, c.company].filter(Boolean).join(" bij ");
+    return `<article class="row" data-id="${esc(c.id)}" data-status="${st}">
+      <div class="who">
+        <div class="name">${esc(c.name)} ${c.prio === "A" ? '<span class="prio">A</span>' : ""}</div>
+        <div class="title">${esc(role)}</div>
+        <div class="meta"><span class="pill ${laneClass(seg.spoor)}">${esc(seg.label)}</span>${inIcp(c) ? "" : '<span class="pill out">Buiten ICP</span>'}${c.linkedin ? "" : '<span class="pill nolink">Geen profiel gevonden, zoek op naam</span>'}${c.loc ? `<span>${esc(c.loc)}</span>` : ""}</div>
+      </div>
+      <div class="side">
+        <select class="status" data-v="${st}" aria-label="Status van ${esc(c.name)}">
+          ${STATUS.map(([v, l]) => `<option value="${v}" ${v === st ? "selected" : ""}>${l}</option>`).join("")}
+        </select>
+        ${c.sentAt ? `<span class="done">verstuurd ${esc(c.sentAt)}</span>` : ""}
+      </div>
+      <div class="actions">
+        <button class="btn copy" type="button">Kopieer bericht</button>
+        <a class="btn ghost" href="${esc(liFor(c))}" target="_blank" rel="noopener noreferrer">Open op LinkedIn</a>
+        <span class="chars ${over ? "over" : ""}">${m.length}${LIMIT ? " / " + LIMIT : ""} tekens</span>
+      </div>
+      <details><summary>Bekijk bericht</summary><p class="msg">${esc(m)}</p></details>
+    </article>`;
+  }).join("");
+}
+
+function toast(t){
+  const el = document.createElement("div");
+  el.className = "toast"; el.textContent = t; el.setAttribute("role", "status");
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1800);
+}
+
+$("list").addEventListener("click", async (e) => {
+  const btn = e.target.closest(".copy");
+  if (!btn) return;
+  const row = btn.closest(".row");
+  const c = contacts.find((x) => x.id === row.dataset.id);
+  if (!c) return;
+  try {
+    await navigator.clipboard.writeText(msgFor(c));
+    toast("Bericht gekopieerd");
+  } catch (_) {
+    const d = row.querySelector("details"); d.open = true;
+    const p = d.querySelector(".msg");
+    const r = document.createRange(); r.selectNodeContents(p);
+    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    toast("Tekst geselecteerd, kopieer hem zelf");
+  }
+});
+
+$("list").addEventListener("change", (e) => {
+  const sel = e.target.closest(".status");
+  if (!sel) return;
+  const c = contacts.find((x) => x.id === sel.closest(".row").dataset.id);
+  if (!c) return;
+  c.status = sel.value;
+  if (c.status === "sent" && !c.sentAt) c.sentAt = today();
+  if (c.status === "todo") c.sentAt = "";
+  if (!save(c.id, { status: c.status, sentAt: c.sentAt || "" })) toast("Je browser bewaart de status niet. Exporteer de CSV als back-up.");
+  render();
+});
+
+document.getElementById("tabs").addEventListener("click", (e) => {
+  const t = e.target.closest(".tab"); if (!t) return;
+  state.lane = t.dataset.lane;
+  document.querySelectorAll(".tab").forEach((b) => b.setAttribute("aria-pressed", String(b === t)));
+  fillSegSelect(); render();
+});
+$("seg").addEventListener("change", (e) => { state.seg = e.target.value; render(); });
+$("st").addEventListener("change", (e) => { state.st = e.target.value; render(); });
+$("q").addEventListener("input", (e) => { state.q = e.target.value; render(); });
+$("prioOnly").addEventListener("change", (e) => { state.prio = e.target.checked; render(); });
+$("showOut").addEventListener("change", (e) => { state.out = e.target.checked; render(); });
+
+$("export").addEventListener("click", () => {
+  const head = ["Naam","Functie","Bedrijf","Locatie","Groep","Spoor","Prioriteit","Binnen ICP","LinkedIn","Status","Verstuurd op","Bericht"];
+  const label = Object.fromEntries(STATUS);
+  const cell = (v) => { const s = String(v ?? ""); const x = /^[=+\-@\t\r]/.test(s) ? "'" + s : s; return /[";\n\r]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+  const rows = contacts.map((c) => [c.name, c.title, c.company, c.loc, SEG[c.seg] ? SEG[c.seg].label : c.seg, LANE[SEG[c.seg] && SEG[c.seg].spoor] || "", c.prio, inIcp(c) ? "ja" : "nee", c.linkedin || "", label[c.status || "todo"], c.sentAt || "", msgFor(c)]);
+  const csv = "\uFEFF" + [head, ...rows].map((r) => r.map(cell).join(";")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = `outreach-${today()}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+
+fillSegSelect();
+renderTemplates();
+render();
+</script>
+</body>
+</html>

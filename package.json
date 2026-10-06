@@ -1,0 +1,15 @@
+{
+  "name": "apollo-linkedin-outreach",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Apollo-leads naar een LinkedIn-outreachlijst: Claude zoekt het profiel en schrijft het bericht.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node outreach.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
